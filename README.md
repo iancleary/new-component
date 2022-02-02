@@ -53,7 +53,7 @@ Options:
 
 ## Example Usage
 
-The first and only arguement is the name of the component to create.
+The first and only argument is the name of the component to create.
 
 ```bash
 ❯ new-component Backdrop

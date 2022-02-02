@@ -12,6 +12,7 @@ Ian Cleary ([iancleary](https://github.com/iancleary))
 **Welcome!** This is a template repository for Python projects, engineered for use as a [GitHub template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template). To use the template, click on "Use this template" or browse to [template-python/generate](https://github.com/iancleary/template-python/generate). GitHub will create a new repository without the commit history from this one.
 
 The `template-python` repo name can be replaced with a one-line terminal command: `git grep -l 'template-python' | xargs sed -i '' 's/template-python/repo-name/g'` (replace `repo-name` with the name of the repository you generate). There may also be a few edits to the _pyproject.toml_ needed. See the [quickstart](#quickstart) section for more.
+
 ## Quickstart
 
 ```sh

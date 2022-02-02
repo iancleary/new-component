@@ -82,9 +82,13 @@ export { default } from "./Backdrop"
 import React from "react"
 import styled from "styled-components"
 
-const Backdrop = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>
-}
+const Backdrop = ({children}) => {
+  return (
+    <Wrapper>
+      {children}
+    </Wrapper>
+  )
+};
 
 const Wrapper = styled.div`
   /* CSS Goes Here */

@@ -187,7 +187,7 @@ plugins = ["setuptools"]
 name = "jinja2"
 version = "3.0.3"
 description = "A very fast and expressive template engine."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -215,7 +215,7 @@ testing = ["coverage", "pyyaml"]
 name = "markupsafe"
 version = "2.0.1"
 description = "Safely add untrusted strings to HTML/XML markup."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -609,7 +609,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8ba88c9896b76d4b808dd0483ce07c6f2b1aed3f8d9bc61513010843cd96c557"
+content-hash = "dc81016547c78b6fb22b07a50c262c0c7efa687619d3b7c0424bed0b29e67913"
 
 [metadata.files]
 atomicwrites = [

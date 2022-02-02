@@ -44,6 +44,8 @@ Arguments:
 Options:
   -d, --directory TEXT  The directory in which to create the component.
                         [default: src/components/]
+  -e, --extension TEXT  The file extension for the created component files.
+                        [default: js]
   -v, --version         Show the application's version and exit.
   --install-completion  Install completion for the current shell.
   --show-completion     Show completion for the current shell, to copy it or

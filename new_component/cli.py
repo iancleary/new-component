@@ -11,23 +11,28 @@ from new_component._version import _version_callback
 app = typer.Typer()
 
 DEFAULT_COMPONENTS_DIR = "src/components/"
+DEFAULT_FILE_EXTENSION = "js"  # jsx, ts, etc.
 JINJA_ENVIRONMENT = _create_jinja_environment()
 
 
 def _create_output(
-    new_directory: Path, template_name: str, variables: dict, filename: str = None
+    new_directory: Path,
+    template_name: str,
+    variables: dict,
+    extension: str,
+    filename: str = None,
 ) -> None:
     """
     Write new file to disk, within `new_directory`,
     by rendering the jinja template `template_name`
     """
     if filename is None:
-        filename = template_name.replace(".j2", "")
+        filename = template_name
 
-    template = JINJA_ENVIRONMENT.get_template(template_name)
+    template = JINJA_ENVIRONMENT.get_template(f"{template_name}.js.j2")
     output = template.render(variables)
 
-    with open(f"{new_directory}/{filename}", "w") as f:
+    with open(f"{new_directory}/{filename}.{extension}", "w") as f:
         f.write(output)
 
 
@@ -42,6 +47,12 @@ def main(
         "--directory",
         "-d",
         help="The directory in which to create the component.",
+    ),
+    extension: str = typer.Option(
+        DEFAULT_FILE_EXTENSION,
+        "--extension",
+        "-e",
+        help="The file extension for the created component files.",
     ),
     version: Optional[bool] = typer.Option(
         None,
@@ -92,14 +103,16 @@ def main(
     # Render component files in your components directory
     _create_output(
         new_directory=full_path_to_component_directory,
-        template_name="index.js.j2",
+        template_name="index",
         variables=variables,
+        extension=extension,
     )
     _create_output(
         new_directory=full_path_to_component_directory,
-        template_name="component.js.j2",
+        template_name="component",
         variables=variables,
-        filename=f"{name}.js",
+        extension=extension,
+        filename=f"{name}",
     )
 
     # Echo status to user

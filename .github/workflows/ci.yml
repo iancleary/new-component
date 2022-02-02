@@ -15,10 +15,10 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10"]
     env:
-      CODECOV_UPLOAD: false
+      CODECOV_UPLOAD: true
       PIPX_VERSION: "0.16.4"
       POETRY_VERSION: "1.1.11"
-      PYPI_PUBLISH: false
+      PYPI_PUBLISH: true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2

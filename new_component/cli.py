@@ -69,7 +69,7 @@ def main(
     installed_location = new_component.__file__
     templates_dir = installed_location.replace("__init__.py", "")
     template_path = Path(templates_dir) / "templates"
-    typer.echo(template_path)
+    # typer.echo(template_path)
 
     from jinja2 import Environment, FileSystemLoader
 

@@ -11,7 +11,7 @@ namespace_packages = true
 show_error_codes = true
 
 [tool.poetry]
-name = "new_component"
+name = "new-component"
 version = "0.1.0"
 description = "Quickly create opinionated Sytled Components for React Projects"
 authors = ["Ian Cleary <contact@iancleary.me>"]
@@ -19,6 +19,9 @@ license = "MIT"
 homepage = "https://github.com/iancleary/new-component"
 readme = "README.md"
 include = ["new_component/py.typed"]
+
+[tool.poetry.scripts]
+new-component = "new_component.__main__:main"
 
 [tool.poetry.dependencies]
 python = "^3.9"

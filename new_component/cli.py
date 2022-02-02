@@ -3,7 +3,6 @@ from typing import Optional
 
 import typer
 
-import new_component
 from new_component import __app_name__, __version__
 
 app = typer.Typer()
@@ -20,9 +19,14 @@ def _version_callback(value: bool) -> None:
 @app.command()
 def main(
     name: str = typer.Argument(
-        None,
+        ...,  # Required to give name, as in `new-component ContactForm`
         help="Name of component to create.",
-        # callback=_create_component
+    ),
+    directory: str = typer.Option(
+        __COMPONENTS_DIR__,
+        "--directory",
+        "-d",
+        help="The directory in which to create the component.",
     ),
     version: Optional[bool] = typer.Option(
         None,
@@ -33,9 +37,14 @@ def main(
         is_eager=True,
     ),
 ) -> None:
+    """
+    Creates an new component directory in a React project,
+    with opinionated defaults for styled-components.
 
-    components_directory = Path(__COMPONENTS_DIR__)
+    See https://styled-components.com/ for more information.
+    """
 
+    components_directory = Path(directory)
     new_directory = components_directory / name
 
     if new_directory.exists() is False:
@@ -45,4 +54,13 @@ def main(
 
     # index_file = new_directory / "index.js"
 
-    print(new_component.__file__)
+    new_directory_full_path = Path.cwd() / new_directory
+    message_start = "Created a new "
+    component = typer.style(name, fg=typer.colors.GREEN, bold=True)
+    message_end = " Component 💅 🚀!"
+    new_directory_path = typer.style(
+        new_directory_full_path, fg=typer.colors.GREEN, bold=True
+    )
+    message = message_start + component + message_end
+    typer.echo(message)
+    typer.echo(new_directory_path)

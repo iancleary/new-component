@@ -15,7 +15,7 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10"]
     env:
-      CODECOV_UPLOAD: true
+      CODECOV_UPLOAD: false
       PIPX_VERSION: "0.16.4"
       POETRY_VERSION: "1.1.11"
       PYPI_PUBLISH: true

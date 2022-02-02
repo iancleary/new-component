@@ -11,7 +11,7 @@ Ian Cleary ([iancleary](https://github.com/iancleary))
 
 **Welcome!** This is a CLI for creating [styled-components](https://styled-components.com) for React projects quickly.
 
-> Note: I've rewrote Josh W Comeau's [new-component](https://www.npmjs.com/package/new-component) NPM package in Python and adapted it to my preferences. It is an excellent project and you should check it out!
+> Note: I've rewrote Josh W Comeau's [new-component](https://www.npmjs.com/package/new-component) NPM package in Python 🐍 and adapted it to my preferences. It is an excellent project and you should check it out!
 
 I didn't understand styled components at first. At the time of this writing, I'm looking to develop my understanding of CSS, upon the advice of Josh W Comeau's blog post "[The styled-components Happy Path](https://www.joshwcomeau.com/css/styled-components/)".
 

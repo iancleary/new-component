@@ -12,10 +12,10 @@ markdown_extensions:
       toc_depth: 3
 nav:
   - "index.md"
-repo_name: iancleary/template-python
-repo_url: https://github.com/iancleary/template-python
-site_name: template-python docs
-site_url: ""
+repo_name: iancleary/new-component
+repo_url: https://github.com/iancleary/new-component
+site_name: new_component docs
+site_url: "https://new-component.iancleary.me"
 theme:
   favicon: assets/images/favicon.png
   features:

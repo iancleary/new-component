@@ -3,18 +3,37 @@ from typing import Optional
 
 import typer
 
-import new_component
-from new_component import __app_name__, __version__
+from new_component._echos import _create_components_dir_echo, _create_new_component_echo
+from new_component._jinja import _create_jinja_environment
+from new_component._utils import _create_directory
+from new_component._version import _version_callback
 
 app = typer.Typer()
 
-__COMPONENTS_DIR__ = "src/components/"
+DEFAULT_COMPONENTS_DIR = "src/components/"
+DEFAULT_FILE_EXTENSION = "js"  # jsx, ts, etc.
+JINJA_ENVIRONMENT = _create_jinja_environment()
 
 
-def _version_callback(value: bool) -> None:
-    if value:
-        typer.echo(f"{__app_name__} v{__version__}")
-        raise typer.Exit()
+def _create_output(
+    new_directory: Path,
+    template_name: str,
+    variables: dict,
+    extension: str,
+    filename: str = None,
+) -> None:
+    """
+    Write new file to disk, within `new_directory`,
+    by rendering the jinja template `template_name`
+    """
+    if filename is None:
+        filename = template_name
+
+    template = JINJA_ENVIRONMENT.get_template(f"{template_name}.js.j2")
+    output = template.render(variables)
+
+    with open(f"{new_directory}/{filename}.{extension}", "w") as f:
+        f.write(output)
 
 
 @app.command()
@@ -24,10 +43,16 @@ def main(
         help="Name of component to create.",
     ),
     directory: str = typer.Option(
-        __COMPONENTS_DIR__,
+        DEFAULT_COMPONENTS_DIR,
         "--directory",
         "-d",
         help="The directory in which to create the component.",
+    ),
+    extension: str = typer.Option(
+        DEFAULT_FILE_EXTENSION,
+        "--extension",
+        "-e",
+        help="The file extension for the created component files.",
     ),
     version: Optional[bool] = typer.Option(
         None,
@@ -46,43 +71,52 @@ def main(
     """
 
     components_directory = Path(directory)
-    new_directory = components_directory / name
 
-    if new_directory.exists() is False:
-        new_directory.mkdir(
-            parents=True
-        )  # Create directory, creating missing parent folders
+    if components_directory.exists() is False:
+        # Could set creation with a variable
+        _create_directory(directory=components_directory)
+        _create_components_dir_echo(components_directory=components_directory)
 
-    # index_file = new_directory / "index.js"
+    new_component_directory = components_directory / name
+    full_path_to_component_directory = Path.cwd() / new_component_directory
 
-    new_directory_full_path = Path.cwd() / new_directory
-    message_start = "Created a new "
-    component = typer.style(name, fg=typer.colors.GREEN, bold=True)
-    message_end = " Component 💅 🚀!"
-    new_directory_path = typer.style(
-        new_directory_full_path, fg=typer.colors.GREEN, bold=True
+    # Allow user to abort if component already exists
+    if full_path_to_component_directory.exists() is True:
+        warning_message = (
+            f"{name} component already exists in ./{components_directory}/."
+        )
+        styled_warning = typer.style(warning_message, typer.colors.YELLOW, bold=True)
+        styled_component = typer.style(f"{name}", typer.colors.YELLOW, bold=True)
+        confirm_message = (
+            "Are you sure you want to overwrite your "
+            + styled_component
+            + " component?"
+        )
+        typer.echo(styled_warning)
+        typer.confirm(confirm_message, abort=True)
+    else:
+        _create_directory(directory=full_path_to_component_directory)
+
+    # Jinja Variables used in template render
+    variables = {"ComponentName": name}
+
+    # Render component files in your components directory
+    _create_output(
+        new_directory=full_path_to_component_directory,
+        template_name="index",
+        variables=variables,
+        extension=extension,
     )
-    message = message_start + component + message_end
-    typer.echo(message)
-    typer.echo(new_directory_path)
+    _create_output(
+        new_directory=full_path_to_component_directory,
+        template_name="component",
+        variables=variables,
+        extension=extension,
+        filename=f"{name}",
+    )
 
-    installed_location = new_component.__file__
-    templates_dir = installed_location.replace("__init__.py", "")
-    template_path = Path(templates_dir) / "templates"
-    # typer.echo(template_path)
-
-    from jinja2 import Environment, FileSystemLoader
-
-    loader = FileSystemLoader(template_path)
-    jinja_environment = Environment(loader=loader)
-    index_template = jinja_environment.get_template("index.js.j2")
-    index_output = index_template.render({"ComponentName": name})
-
-    with open(f"{new_directory}/index.js", "w") as f:
-        f.write(index_output)
-
-    component_template = jinja_environment.get_template("component.js.j2")
-    component_output = component_template.render({"ComponentName": name})
-
-    with open(f"{new_directory}/{name}.js", "w") as f:
-        f.write(component_output)
+    # Echo status to user
+    _create_new_component_echo(
+        component_name=name,
+        full_path_to_component_directory=full_path_to_component_directory,
+    )

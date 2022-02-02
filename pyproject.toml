@@ -12,8 +12,8 @@ show_error_codes = true
 
 [tool.poetry]
 name = "new-component"
-version = "0.1.1"
-description = "Quickly create opinionated Sytled Components for React Projects"
+version = "0.2.0"
+description = "Quickly create opinionated Styled Components for React Projects"
 authors = ["Ian Cleary <contact@iancleary.me>"]
 license = "MIT"
 homepage = "https://github.com/iancleary/new-component"

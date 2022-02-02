@@ -1,4 +1,4 @@
-from templatepython import __version__, package_version
+from new_component import __version__, package_version
 
 current_version = "0.1.0"
 

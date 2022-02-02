@@ -12,8 +12,8 @@ markdown_extensions:
       toc_depth: 3
 nav:
   - "index.md"
-repo_name: br3ndonland/template-python
-repo_url: https://github.com/br3ndonland/template-python
+repo_name: iancleary/template-python
+repo_url: https://github.com/iancleary/template-python
 site_name: template-python docs
 site_url: ""
 theme:

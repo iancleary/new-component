@@ -1,6 +1,6 @@
 [tool.isort]
 profile = "black"
-src_paths = ["templatepython", "tests"]
+src_paths = ["new_component", "tests"]
 
 [tool.mypy]
 disallow_incomplete_defs = true
@@ -11,17 +11,20 @@ namespace_packages = true
 show_error_codes = true
 
 [tool.poetry]
-name = "templatepython"
+name = "new_component"
 version = "0.1.0"
-description = "Template repository for Python projects"
-authors = ["Brendon Smith <br3ndonland@protonmail.com>"]
+description = "Quickly create opinionated Sytled Components for React Projects"
+authors = ["Ian Cleary <contact@iancleary.me>"]
 license = "MIT"
-homepage = "https://github.com/br3ndonland/template-python"
+homepage = "https://github.com/iancleary/new-component"
 readme = "README.md"
-include = ["templatepython/py.typed"]
+include = ["new_component/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+typer = "^0.4.0"
+colorama = "^0.4.4"
+shellingham = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "*", allow-prereleases = true}

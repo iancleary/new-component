@@ -1,6 +1,6 @@
 from new_component import __version__, package_version
 
-current_version = "0.2.0"
+current_version = "0.2.1"
 
 
 def test_package_version() -> None:

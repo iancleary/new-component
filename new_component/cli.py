@@ -74,6 +74,13 @@ def main(
 
     if components_directory.exists() is False:
         # Could set creation with a variable
+        styled_component_directory = typer.style(
+            f"./{components_directory}/", typer.colors.YELLOW, bold=True
+        )
+        confirm_message = (
+            styled_component_directory + " doesn't exist. Do you want to create it?"
+        )
+        typer.confirm(confirm_message, abort=True)
         _create_directory(directory=components_directory)
         _create_components_dir_echo(components_directory=components_directory)
 

@@ -30,7 +30,7 @@ After you read that article, you'll gather that this CLI aims to combine the wis
 
 That will output the following:
 
-```sh
+```
 Usage: new_component [OPTIONS] NAME
 
   Creates an new component directory in a React project, with opinionated

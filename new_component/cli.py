@@ -3,7 +3,15 @@ from typing import Optional
 
 import typer
 
-from new_component._echos import _create_components_dir_echo, _create_new_component_echo
+from new_component._confirms import (
+    _create_components_dir_confirm,
+    _overwrite_component_confirm,
+)
+from new_component._echos import (
+    _create_components_dir_echo,
+    _create_new_component_echo,
+    _overwrite_component_echo,
+)
 from new_component._jinja import _create_jinja_environment
 from new_component._utils import _create_directory
 from new_component._version import _version_callback
@@ -72,39 +80,27 @@ def main(
 
     components_directory = Path(directory)
 
+    # Prompt user to create components directory, if it doesn't exist
     if components_directory.exists() is False:
-        # Could set creation with a variable
-        styled_component_directory = typer.style(
-            f"./{components_directory}/", typer.colors.YELLOW, bold=True
-        )
-        confirm_message = (
-            styled_component_directory + " doesn't exist. Do you want to create it?"
-        )
-        typer.confirm(confirm_message, abort=True)
+        _create_components_dir_confirm(components_directory=components_directory)
         _create_directory(directory=components_directory)
         _create_components_dir_echo(components_directory=components_directory)
 
+    # Create Paths to the new Component directory
     new_component_directory = components_directory / name
     full_path_to_component_directory = Path.cwd() / new_component_directory
 
-    # Allow user to abort if component already exists
+    # Allow user to abort if component already exists, else create component directory
     if full_path_to_component_directory.exists() is True:
-        warning_message = (
-            f"{name} component already exists in ./{components_directory}/."
+        _overwrite_component_echo(
+            components_directory=new_component_directory, component_name=name
         )
-        styled_warning = typer.style(warning_message, typer.colors.YELLOW, bold=True)
-        styled_component = typer.style(f"{name}", typer.colors.YELLOW, bold=True)
-        confirm_message = (
-            "Are you sure you want to overwrite your "
-            + styled_component
-            + " component?"
-        )
-        typer.echo(styled_warning)
-        typer.confirm(confirm_message, abort=True)
+        _overwrite_component_confirm(component_name=name)
+
     else:
         _create_directory(directory=full_path_to_component_directory)
 
-    # Jinja Variables used in template render
+    # Setup Jinja Variables used in template render
     variables = {"ComponentName": name}
 
     # Render component files in your components directory
@@ -122,8 +118,8 @@ def main(
         filename=f"{name}",
     )
 
-    # Echo status to user
+    # Echo final status to user
     _create_new_component_echo(
         component_name=name,
-        full_path_to_component_directory=full_path_to_component_directory,
+        path_to_component_directory=new_component_directory,
     )

@@ -44,7 +44,7 @@ def _create_new_component_echo(
     message = component_type + " component created! 🚀"
     typer.echo(message)
 
-    message = "Thank you for using new-component"
+    message = "Thank you for using new-component."
 
     thank_you_message = typer.style(message, typer.colors.BRIGHT_BLACK)
     typer.echo(thank_you_message)

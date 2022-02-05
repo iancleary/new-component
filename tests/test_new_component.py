@@ -139,6 +139,7 @@ def test_global_config_file() -> None:
 
     if GLOBAL_CONFIG_PATH.exists() is False:
         GLOBAL_CONFIG_PATH.mkdir(parents=True)
+
     # Data to be written to LOCAL_CONFIG_FILE
     global_settings = {"extension": "jsx", "directory": "src/global/components"}
 

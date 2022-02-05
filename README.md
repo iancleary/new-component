@@ -98,6 +98,38 @@ const Wrapper = styled.div`
 export default Backdrop
 ```
 
+## Configuration
+
+Configuration can be done through 3 different ways:
+
+* Creating a global `settings.json` in your home directory (`~/.config/new-component/settings.json`).
+* Creating a local `.new-component-config.json` in your project's root directory.
+* Command-line arguments.
+
+The resulting values are merged, with command-line values overwriting local values, and local values overwriting global ones.
+
+## API Reference
+
+### Directory
+
+Controls the desired directory for the created component. Defaults to src/components
+
+Usage:
+
+Command line: `--directory <value>` or `-d <value>`
+
+JSON config: `{ "directory": <value> }`
+
+### File Extension
+
+Controls the file extension for the created components. Can be either js (default) or jsx.
+
+Usage:
+
+Command line: `--extension <value> or -e <value>`
+
+JSON config: `{ "extension": <value> }`
+
 ## Further information
 
 > I will likely evolve this CLI as I learn more; I'm on my way 😊

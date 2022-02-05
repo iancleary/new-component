@@ -3,6 +3,7 @@ from typing import Optional
 
 import typer
 
+from new_component._config import _load_config, _merge_config
 from new_component._confirms import (
     _create_components_dir_confirm,
     _overwrite_component_confirm,
@@ -18,8 +19,6 @@ from new_component._version import _version_callback
 
 app = typer.Typer()
 
-DEFAULT_COMPONENTS_DIR = "src/components/"
-DEFAULT_FILE_EXTENSION = "js"  # jsx, ts, etc.
 JINJA_ENVIRONMENT = _create_jinja_environment()
 
 
@@ -51,13 +50,13 @@ def main(
         help="Name of component to create.",
     ),
     directory: str = typer.Option(
-        DEFAULT_COMPONENTS_DIR,
+        None,
         "--directory",
         "-d",
         help="The directory in which to create the component.",
     ),
     extension: str = typer.Option(
-        DEFAULT_FILE_EXTENSION,
+        None,
         "--extension",
         "-e",
         help="The file extension for the created component files.",
@@ -75,9 +74,22 @@ def main(
     Creates an new component directory in a React project,
     with opinionated defaults for styled-components.
 
-    See https://styled-components.com/ for more information.
+    For information on styled-components, see https://styled-components.com/.
+
+    For online documentation, see https://new-component.iancleary.me/.
     """
 
+    # load and merge config
+    file_config = _load_config()
+    config = _merge_config(
+        file_config=file_config, directory=directory, extension=extension
+    )
+
+    # update variables form config
+    directory = config["directory"]
+    extension = config["extension"]
+
+    # path to components directory
     components_directory = Path(directory)
 
     # Prompt user to create components directory, if it doesn't exist

@@ -8,6 +8,7 @@ from new_component._confirms import (
     _create_components_dir_confirm,
     _overwrite_component_confirm,
 )
+from new_component._constants import DEFAULT_COMPONENTS_DIR, DEFAULT_FILE_EXTENSION
 from new_component._echos import (
     _create_components_dir_echo,
     _create_new_component_echo,
@@ -19,8 +20,6 @@ from new_component._version import _version_callback
 
 app = typer.Typer()
 
-DEFAULT_COMPONENTS_DIR = "src/components/"
-DEFAULT_FILE_EXTENSION = "js"  # jsx, ts, etc.
 JINJA_ENVIRONMENT = _create_jinja_environment()
 
 

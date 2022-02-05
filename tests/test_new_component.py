@@ -1,15 +1,24 @@
+import json
+import os
 import shutil
 from pathlib import Path
 
 from typer.testing import CliRunner
 
 from new_component import __app_name__, __version__, cli
-from new_component._constants import DEFAULT_COMPONENTS_DIR, DEFAULT_FILE_EXTENSION
+from new_component._constants import (
+    DEFAULT_COMPONENTS_DIR,
+    DEFAULT_FILE_EXTENSION,
+    LOCAL_CONFIG_FILE,
+)
 
 # ensure component directory is empty
 DEFAULT_COMPONENTS_DIR_PATH = Path(DEFAULT_COMPONENTS_DIR)
 if DEFAULT_COMPONENTS_DIR_PATH.exists():
     shutil.rmtree(path=DEFAULT_COMPONENTS_DIR)
+
+if LOCAL_CONFIG_FILE.exists():
+    os.remove(LOCAL_CONFIG_FILE)
 
 # create typer runner for testing
 runner = CliRunner()
@@ -91,3 +100,20 @@ def test_creating_component_with_extension() -> None:
     assert "✨ Creating a new Extension Component ✨!" in result.stdout
     assert Path("./src/components/Extension/index.jsx").exists() is True
     assert Path("./src/components/Extension/Extension.jsx").exists() is True
+
+
+def test_local_config_file() -> None:
+
+    # Data to be written to LOCAL_CONFIG_FILE
+    local_settings = {"extension": "jsx", "directory": "components"}
+
+    with open(LOCAL_CONFIG_FILE, "w") as outfile:
+        json.dump(local_settings, outfile, indent=4)
+
+    result = runner.invoke(cli.app, ["LocalConfig"])
+
+    assert result.exit_code == 0
+    assert "LocalConfig" in result.stdout
+    assert "✨ Creating a new LocalConfig Component ✨!" in result.stdout
+    assert Path("./components/LocalConfig/index.jsx").exists() is True
+    assert Path("./components/LocalConfig/LocalConfig.jsx").exists() is True

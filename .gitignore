@@ -195,3 +195,9 @@ pip-selfcheck.json
 # components directories
 src/components
 components
+
+# local config file
+.new-component-config.json
+
+# DEBUG merged config file
+.new-component-merged-config.json

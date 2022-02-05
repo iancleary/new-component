@@ -8,7 +8,6 @@ from new_component._confirms import (
     _create_components_dir_confirm,
     _overwrite_component_confirm,
 )
-from new_component._constants import DEFAULT_COMPONENTS_DIR, DEFAULT_FILE_EXTENSION
 from new_component._echos import (
     _create_components_dir_echo,
     _create_new_component_echo,
@@ -51,13 +50,13 @@ def main(
         help="Name of component to create.",
     ),
     directory: str = typer.Option(
-        DEFAULT_COMPONENTS_DIR,
+        None,
         "--directory",
         "-d",
         help="The directory in which to create the component.",
     ),
     extension: str = typer.Option(
-        DEFAULT_FILE_EXTENSION,
+        None,
         "--extension",
         "-e",
         help="The file extension for the created component files.",

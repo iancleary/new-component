@@ -9,6 +9,8 @@ from new_component import __app_name__, __version__, cli
 from new_component._constants import (
     DEFAULT_COMPONENTS_DIR,
     DEFAULT_FILE_EXTENSION,
+    GLOBAL_CONFIG_FILE,
+    GLOBAL_CONFIG_PATH,
     LOCAL_CONFIG_FILE,
 )
 
@@ -19,6 +21,9 @@ if DEFAULT_COMPONENTS_DIR_PATH.exists():
 
 if LOCAL_CONFIG_FILE.exists():
     os.remove(LOCAL_CONFIG_FILE)
+
+if GLOBAL_CONFIG_FILE.exists():
+    os.remove(GLOBAL_CONFIG_FILE)
 
 # create typer runner for testing
 runner = CliRunner()
@@ -51,13 +56,12 @@ def test_creating_component() -> None:
     assert "✨ Creating a new AwesomeComponent Component ✨!" in result.stdout
 
 
-# ensure ./component directory is empty
-SPECIFIED_COMPONENTS_DIR_PATH = Path("./components")
-if SPECIFIED_COMPONENTS_DIR_PATH.exists():
-    shutil.rmtree(path=SPECIFIED_COMPONENTS_DIR_PATH)
-
-
 def test_creating_component_with_directory_first_time() -> None:
+
+    # ensure ./component directory is empty
+    SPECIFIED_COMPONENTS_DIR_PATH = Path("./components")
+    if SPECIFIED_COMPONENTS_DIR_PATH.exists():
+        shutil.rmtree(path=SPECIFIED_COMPONENTS_DIR_PATH)
 
     result = runner.invoke(
         cli.app, ["DirectoryComponent", "--directory", "components"], input="y\n"
@@ -104,6 +108,12 @@ def test_creating_component_with_extension() -> None:
 
 def test_local_config_file() -> None:
 
+    if LOCAL_CONFIG_FILE.exists():
+        os.remove(LOCAL_CONFIG_FILE)
+
+    if GLOBAL_CONFIG_FILE.exists():
+        os.remove(GLOBAL_CONFIG_FILE)
+
     # Data to be written to LOCAL_CONFIG_FILE
     local_settings = {"extension": "jsx", "directory": "components"}
 
@@ -117,3 +127,65 @@ def test_local_config_file() -> None:
     assert "✨ Creating a new LocalConfig Component ✨!" in result.stdout
     assert Path("./components/LocalConfig/index.jsx").exists() is True
     assert Path("./components/LocalConfig/LocalConfig.jsx").exists() is True
+
+
+def test_global_config_file() -> None:
+
+    if LOCAL_CONFIG_FILE.exists():
+        os.remove(LOCAL_CONFIG_FILE)
+
+    if GLOBAL_CONFIG_FILE.exists():
+        os.remove(GLOBAL_CONFIG_FILE)
+
+    if GLOBAL_CONFIG_PATH.exists() is False:
+        GLOBAL_CONFIG_PATH.mkdir(parents=True)
+    # Data to be written to LOCAL_CONFIG_FILE
+    global_settings = {"extension": "jsx", "directory": "src/global/components"}
+
+    with open(GLOBAL_CONFIG_FILE, "w") as outfile:
+        json.dump(global_settings, outfile, indent=4)
+
+    result = runner.invoke(cli.app, ["GlobalConfig"], input="y\n")
+
+    assert result.exit_code == 0
+    assert "GlobalConfig" in result.stdout
+    assert "✨ Creating a new GlobalConfig Component ✨!" in result.stdout
+    assert Path("./src/global/components/GlobalConfig/index.jsx").exists() is True
+    assert (
+        Path("./src/global/components/GlobalConfig/GlobalConfig.jsx").exists() is True
+    )
+
+
+def test_local_and_global_config_file() -> None:
+
+    if LOCAL_CONFIG_FILE.exists():
+        os.remove(LOCAL_CONFIG_FILE)
+
+    if GLOBAL_CONFIG_FILE.exists():
+        os.remove(GLOBAL_CONFIG_FILE)
+
+    if GLOBAL_CONFIG_PATH.exists() is False:
+        GLOBAL_CONFIG_PATH.mkdir(parents=True)
+
+    # Data to be written to LOCAL_CONFIG_FILE
+    local_settings = {"extension": "jsx", "directory": "components"}
+
+    with open(LOCAL_CONFIG_FILE, "w") as outfile:
+        json.dump(local_settings, outfile, indent=4)
+
+    # Data to be written to LOCAL_CONFIG_FILE
+    global_settings = {"extension": "jsx2", "directory": "src/global/components"}
+
+    with open(GLOBAL_CONFIG_FILE, "w") as outfile:
+        json.dump(global_settings, outfile, indent=4)
+
+    result = runner.invoke(cli.app, ["LocalAndGlobalConfig"])
+
+    assert result.exit_code == 0
+    assert "LocalAndGlobalConfig" in result.stdout
+    assert "✨ Creating a new LocalAndGlobalConfig Component ✨!" in result.stdout
+    assert Path("./components/LocalAndGlobalConfig/index.jsx").exists() is True
+    assert (
+        Path("./components/LocalAndGlobalConfig/LocalAndGlobalConfig.jsx").exists()
+        is True
+    )

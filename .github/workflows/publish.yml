@@ -1,0 +1,40 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+*"
+
+jobs:
+  pypi-publish:
+    name: Upload release to PyPI (after Test Completion)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ['3.11']
+        os: [ubuntu-22.04]
+    
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up python-version
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Disable venv
+        run: |
+          pdm config python.use_venv false
+      - name: Install dependencies
+        run: |
+          pdm sync -d -G dev
+      - name: Run Tests 
+        run: |
+          pdm run -v pytest tests
+      - name: Publish package distributions to PyPI
+        run: pdm publish

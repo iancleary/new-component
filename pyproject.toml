@@ -18,6 +18,11 @@ dependencies = [
     "Jinja2==3.1.2"
 ]
 
+[project.urls]
+Homepage = "https://new-component.iancleary.me"
+Repository = "https://github.com/iancleary/new-component"
+Documentation = "https://new-component.iancleary.me"
+
 [project.scripts]
 new-component = "new_component.__main__:main"
 

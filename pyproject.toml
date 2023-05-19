@@ -1,6 +1,6 @@
 [project]
 name = "new_component"
-version = "0.4.3"
+version = "0.4.4"
 description = "Quickly create opinionated Styled Components for React Projects"
 authors = [
     {name = "Ian Cleary", email = "github@iancleary.me"},

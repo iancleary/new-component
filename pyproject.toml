@@ -1,5 +1,5 @@
 [project]
-name = "new-component"
+name = "new_component"
 version = "0.4.2"
 description = "Quickly create opinionated Styled Components for React Projects"
 authors = [

@@ -33,7 +33,7 @@ write_template = "__version__ = '{}'"  # optional, default to "{}"
 
 [tool.pdm.build]
 package-dir = "src"
-includes = ["src/new_component"]
+includes = ["src/new_component", "src/new_component/templates/**.j2"]
 source-includes = ["tests", "LICENSE", "README.md"]
 
 [tool.pdm.dev-dependencies]

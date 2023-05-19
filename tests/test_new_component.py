@@ -30,14 +30,12 @@ runner = CliRunner()
 
 
 def test_version() -> None:
-
     result = runner.invoke(cli.app, ["--version"])
     assert result.exit_code == 0
     assert f"{__app_name__} v{__version__}\n" in result.stdout
 
 
 def test_prompt_to_create_components_directory() -> None:
-
     result = runner.invoke(
         cli.app, ["Button"], input="y\n"
     )  # y to create components directory
@@ -49,7 +47,6 @@ def test_prompt_to_create_components_directory() -> None:
 
 
 def test_creating_component() -> None:
-
     result = runner.invoke(cli.app, ["AwesomeComponent"])
     assert result.exit_code == 0
     assert "AwesomeComponent" in result.stdout
@@ -57,7 +54,6 @@ def test_creating_component() -> None:
 
 
 def test_creating_component_with_directory_first_time() -> None:
-
     # ensure ./component directory is empty
     SPECIFIED_COMPONENTS_DIR_PATH = Path("./components")
     if SPECIFIED_COMPONENTS_DIR_PATH.exists():
@@ -75,7 +71,6 @@ def test_creating_component_with_directory_first_time() -> None:
 
 
 def test_creating_component_with_directory_that_exists() -> None:
-
     result = runner.invoke(
         cli.app, ["DirectoryComponent2", "--directory", "components"]
     )
@@ -85,7 +80,6 @@ def test_creating_component_with_directory_that_exists() -> None:
 
 
 def test_creating_component_files() -> None:
-
     result = runner.invoke(cli.app, ["File"])
     assert result.exit_code == 0
     assert "File" in result.stdout
@@ -97,7 +91,6 @@ def test_creating_component_files() -> None:
 
 
 def test_creating_component_with_extension() -> None:
-
     result = runner.invoke(cli.app, ["Extension", "--extension", "jsx"])
     assert result.exit_code == 0
     assert "Extension" in result.stdout
@@ -107,7 +100,6 @@ def test_creating_component_with_extension() -> None:
 
 
 def test_local_config_file() -> None:
-
     if LOCAL_CONFIG_FILE.exists():
         os.remove(LOCAL_CONFIG_FILE)
 
@@ -130,7 +122,6 @@ def test_local_config_file() -> None:
 
 
 def test_global_config_file() -> None:
-
     if LOCAL_CONFIG_FILE.exists():
         os.remove(LOCAL_CONFIG_FILE)
 
@@ -158,7 +149,6 @@ def test_global_config_file() -> None:
 
 
 def test_local_and_global_config_file() -> None:
-
     if LOCAL_CONFIG_FILE.exists():
         os.remove(LOCAL_CONFIG_FILE)
 

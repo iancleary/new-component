@@ -5,7 +5,7 @@ description = "Quickly create opinionated Styled Components for React Projects"
 authors = [
     {name = "Ian Cleary", email = "github@iancleary.me"},
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 
 readme = "README.md"
@@ -24,16 +24,15 @@ Repository = "https://github.com/iancleary/new-component"
 Documentation = "https://new-component.iancleary.me"
 
 [project.scripts]
-new-component = "new_component.__main__.py:main"
+new-component = "new_component.main:main"
 
 [tool.pdm.version]
 source = "scm"
-write_to = "new_component/__version__.py"
+write_to = "new_component/VERSION"
 write_template = "__version__ = '{}'"  # optional, default to "{}"
 
 [tool.pdm.build]
 excludes = ["./**/.git"]
-package-dir = "src"
 includes = ["new_component"]
 source-includes = ["LICENSE", "README.md"]
 # editables backend doesn't work well with namespace packages

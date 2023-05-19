@@ -1,21 +1,24 @@
 [project]
 name = "new_component"
-version = "0.4.4"
 description = "Quickly create opinionated Styled Components for React Projects"
 authors = [
     {name = "Ian Cleary", email = "github@iancleary.me"},
 ]
+dynamic = ["version"]
 requires-python = ">=3.11"
 license = {text = "MIT"}
-
-readme = "README.md"
-
 dependencies = [
     "typer==0.9.0",
     "colorama==0.4.6",
     "shellingham==1.5.0.post1",
     "rich==13.3.5",
     "Jinja2==3.1.2"
+]
+readme = "README.md"
+keywords = ["script", "javascript", "styled-components"]
+classifiers = [
+    "Topic :: Software Development :: Code Generators",
+    "Programming Language :: Python :: 3.11",
 ]
 
 [project.urls]

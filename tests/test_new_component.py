@@ -5,7 +5,7 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from new_component import __app_name__, __version__, cli
+from new_component import __app_name__, cli
 from new_component._constants import (
     DEFAULT_COMPONENTS_DIR,
     DEFAULT_FILE_EXTENSION,
@@ -13,6 +13,7 @@ from new_component._constants import (
     GLOBAL_CONFIG_PATH,
     LOCAL_CONFIG_FILE,
 )
+from new_component._version import read_version
 
 # ensure component directory is empty
 DEFAULT_COMPONENTS_DIR_PATH = Path(DEFAULT_COMPONENTS_DIR)
@@ -32,7 +33,7 @@ runner = CliRunner()
 def test_version() -> None:
     result = runner.invoke(cli.app, ["--version"])
     assert result.exit_code == 0
-    assert f"{__app_name__} v{__version__}\n" in result.stdout
+    assert f"{__app_name__} v{read_version()}\n" in result.stdout
 
 
 def test_prompt_to_create_components_directory() -> None:

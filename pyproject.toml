@@ -24,9 +24,21 @@ Repository = "https://github.com/iancleary/new-component"
 Documentation = "https://new-component.iancleary.me"
 
 [project.scripts]
-new-component = "new_component.__main__:main"
+new-component = "new_component.__main__.py:main"
 
-[tool.pdm]
+[tool.pdm.version]
+source = "scm"
+write_to = "new_component/__version__.py"
+write_template = "__version__ = '{}'"  # optional, default to "{}"
+
+[tool.pdm.build]
+excludes = ["./**/.git"]
+package-dir = "src"
+includes = ["new_component"]
+source-includes = ["LICENSE", "README.md"]
+# editables backend doesn't work well with namespace packages
+editable-backend = "path"
+
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest==7.2.0",

@@ -1,6 +1,6 @@
 [project]
 name = "new_component"
-version = "0.4.2"
+version = "0.4.3"
 description = "Quickly create opinionated Styled Components for React Projects"
 authors = [
     {name = "Ian Cleary", email = "github@iancleary.me"},
@@ -32,11 +32,9 @@ write_to = "new_component/VERSION"
 write_template = "__version__ = '{}'"  # optional, default to "{}"
 
 [tool.pdm.build]
-excludes = ["./**/.git"]
-includes = ["new_component"]
-source-includes = ["LICENSE", "README.md"]
-# editables backend doesn't work well with namespace packages
-editable-backend = "path"
+package-dir = "src"
+includes = ["src/new_component"]
+source-includes = ["tests", "LICENSE", "README.md"]
 
 [tool.pdm.dev-dependencies]
 dev = [

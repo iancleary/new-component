@@ -28,7 +28,6 @@ jobs:
       - name: Install dependencies
         run: |
           pdm sync -d -G dev
-      - name: Run Tests 
+      - name: Run Tests
         run: |
           pdm run -v pytest tests
-

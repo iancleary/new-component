@@ -1,11 +1,11 @@
 [project]
-name = "new-component"
-version = "0.4.2"
+name = "new_component"
+version = "0.4.3"
 description = "Quickly create opinionated Styled Components for React Projects"
 authors = [
     {name = "Ian Cleary", email = "github@iancleary.me"},
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 
 readme = "README.md"
@@ -18,10 +18,24 @@ dependencies = [
     "Jinja2==3.1.2"
 ]
 
-[project.scripts]
-new-component = "new_component.__main__:main"
+[project.urls]
+Homepage = "https://new-component.iancleary.me"
+Repository = "https://github.com/iancleary/new-component"
+Documentation = "https://new-component.iancleary.me"
 
-[tool.pdm]
+[project.scripts]
+new-component = "new_component.main:main"
+
+[tool.pdm.version]
+source = "scm"
+write_to = "new_component/VERSION"
+write_template = "__version__ = '{}'"  # optional, default to "{}"
+
+[tool.pdm.build]
+package-dir = "src"
+includes = ["src/new_component"]
+source-includes = ["tests", "LICENSE", "README.md"]
+
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest==7.2.0",

@@ -13,7 +13,7 @@ jobs:
       matrix:
         python-version: ['3.11']
         os: [ubuntu-22.04]
-    
+
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           pdm sync -d -G dev
-      - name: Run Tests 
+      - name: Run Tests
         run: |
           pdm run -v pytest tests
       - name: Publish package distributions to PyPI

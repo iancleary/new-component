@@ -204,6 +204,3 @@ components
 
 # PDM
 .pdm-python
-
-# src folder for default components
-src/

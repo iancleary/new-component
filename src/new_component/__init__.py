@@ -1,1 +1,1 @@
-__app_name__ = "datnewnew"
+__app_name__ = "new_component"

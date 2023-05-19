@@ -18,6 +18,9 @@ dependencies = [
     "Jinja2==3.1.2"
 ]
 
+[project.scripts]
+new-component = "new_component.__main__:main"
+
 [tool.pdm]
 [tool.pdm.dev-dependencies]
 dev = [

@@ -1,5 +1,7 @@
 import json
 
+import typer
+
 from new_component._constants import (
     DEFAULT_COMPONENTS_DIR,
     DEFAULT_FILE_EXTENSION,
@@ -70,3 +72,28 @@ def _merge_config(
     #     json.dump(config, outfile, indent=4)
 
     return config
+
+
+def _config_callback(value: bool) -> None:
+    if value:
+        file_config = _load_config()
+        typer.echo(f"global_config: {GLOBAL_CONFIG_FILE}")
+        if "global" in file_config.keys():
+            global_config = file_config["global"]
+            typer.echo(f"\t{global_config}")
+        else:
+            typer.echo("No global config file found.")
+
+        typer.echo(f"local config: {LOCAL_CONFIG_FILE}")
+        if "local" in file_config.keys():
+            local_config = file_config["local"]
+            typer.echo(f"\t{local_config}")
+        else:
+            typer.echo("No local config found.")
+
+        merged_config = _merge_config(file_config)
+
+        typer.echo("merged config:")
+        typer.echo(f"\t{merged_config}")
+
+        raise typer.Exit()

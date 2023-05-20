@@ -3,7 +3,7 @@ from typing import Optional
 
 import typer
 
-from new_component._config import _load_config, _merge_config
+from new_component._config import _load_config, _merge_config, _config_callback
 from new_component._confirms import (
     _create_components_dir_confirm,
     _overwrite_component_confirm,
@@ -60,6 +60,14 @@ def main(
         "--extension",
         "-e",
         help="The file extension for the created component files.",
+    ),
+    settings: Optional[bool] = typer.Option(
+        None,
+        "--settings",
+        "-s",
+        help="Show the application's settings and exit.",
+        callback=_config_callback,
+        is_eager=True,
     ),
     version: Optional[bool] = typer.Option(
         None,
